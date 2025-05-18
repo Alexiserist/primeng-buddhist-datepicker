@@ -2,14 +2,25 @@
 
 This library extends the [PrimeNG Datepicker](https://primeng.org/datepicker) to support **Buddhist Year (BE)** display.
 
-> ✅ Built with [Angular CLI](https://github.com/angular/angular-cli) v19.2.0  
-> 📦 Uses **PrimeNG v19**
+> ✅ Built with [Angular CLI](https://github.com/angular/angular-cli)  
+> 📦 Supports **PrimeNG** and **Angular** version mapping as shown below
+
+---
+
+## 🔄 Version Compatibility
+
+| Angular Version        | Library Version                        | Install Command                                          |
+|------------------------|----------------------------------------|----------------------------------------------------------|
+| `^19.0.0` and above    | `primeng-buddhist-year-datepicker@19` | `npm i primeng-buddhist-year-datepicker@^19.0.0`         |
+| `^17.0.0` to `<19.0.0` | `primeng-buddhist-year-datepicker@17` | `npm i primeng-buddhist-year-datepicker@^17.0.0`         |
+
+> ⚠️ Make sure to match the correct version of the library with your Angular version.
 
 ---
 
 ## 🧪 Run Demo App
 
-To see how the component works:
+To see the component in action:
 
 ```bash
 npm install
