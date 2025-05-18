@@ -1,11 +1,11 @@
 import { TemplateRef } from '@angular/core';
-import { DatePicker } from './datepicker';
+import { Calendar } from './calendar';
 
 /**
- * Defines valid templates in DatePicker.
+ * Defines valid templates in Calendar.
  * @group Templates
  */
-export interface DatePickerTemplates {
+export interface CalendarTemplates {
     /**
      * Custom header template.
      * @param {Object} context - date value instance.
@@ -142,10 +142,10 @@ export interface Month {
     weekNumbers?: number[];
 }
 /**
- * Custom DatePicker responsive options metadata.
+ * Custom Calendar responsive options metadata.
  * @group Interface
  */
-export interface DatePickerResponsiveOptions {
+export interface CalendarResponsiveOptions {
     /**
      * Breakpoint for responsive mode. Exp; @media screen and (max-width: ${breakpoint}) {...}
      */
@@ -156,22 +156,22 @@ export interface DatePickerResponsiveOptions {
     numMonths?: number;
 }
 /**
- * Custom type for the DatePicker views.
+ * Custom type for the calendar views.
  * @group Types
  */
-export type DatePickerTypeView = 'date' | 'month' | 'year';
+export type CalendarTypeView = 'date' | 'month' | 'year';
 /**
- * Custom type for the DatePicker navigation state.
+ * Custom type for the calendar navigation state.
  * @group Types
  */
 export type NavigationState = { backward?: boolean; button?: boolean };
 
 /**
- * Custom DatePicker year change event.
- * @see {@link DatePicker.onYearChange}
+ * Custom Calendar year change event.
+ * @see {@link Calendar.onYearChange}
  * @group Events
  */
-export interface DatePickerYearChangeEvent {
+export interface CalendarYearChangeEvent {
     /**
      * New month.
      */
@@ -182,11 +182,11 @@ export interface DatePickerYearChangeEvent {
     year?: number;
 }
 /**
- * Custom DatePicker month change event.
- * @see {@link DatePicker.onMonthChange}
+ * Custom Calendar month change event.
+ * @see {@link Calendar.onMonthChange}
  * @group Events
  */
-export interface DatePickerMonthChangeEvent {
+export interface CalendarMonthChangeEvent {
     /**
      * New month.
      */
@@ -196,6 +196,5 @@ export interface DatePickerMonthChangeEvent {
      */
     year?: number;
 }
-
 
 export type YearBuddhist = boolean;

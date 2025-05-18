@@ -1,6 +1,6 @@
 {
   "name": "primeng-buddhist-year-datepicker",
-  "version": "0.0.2",
+  "version": "17.0.0",
   "description": "An extended PrimeNG V19 Datepicker with Buddhist calendar support.",
   "author": "alexiserist",
   "license": "MIT",
@@ -16,9 +16,9 @@
     "url": "https://github.com/Alexiserist/primeng-buddhist-datepicker.git"
   },
   "peerDependencies": {
-    "@angular/common": ">=19.0.0 <20.0.0",
-    "@angular/core": ">=19.0.0 <20.0.0",
-    "primeng": ">=19.0.0",
+    "@angular/common": ">=17.0.0 <19.0.0",
+    "@angular/core": ">=17.0.0 <19.0.0",
+    "primeng": ">=17.0.0",
     "primeicons": "^7.0.0"
   },
   "dependencies": {
