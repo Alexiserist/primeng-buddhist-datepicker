@@ -2,8 +2,8 @@
 
 This library extends the [PrimeNG Datepicker](https://primeng.org/datepicker) to support **Buddhist Year (BE)** display.
 
-> ✅ Built with [Angular CLI](https://github.com/angular/angular-cli) v19.2.0  
-> 📦 Uses **PrimeNG v19**
+> ✅ Built with [Angular CLI](https://github.com/angular/angular-cli) v17 
+> 📦 Uses **PrimeNG v17**
 
 ---
 
@@ -19,7 +19,7 @@ ng serve
 
 ## 🧪 Import Modules Into Component
 ```
-import { DatePickerModule } from 'primeng-buddhist-year-datepicker';
+import { CalendarModule } from 'primeng-buddhist-datepicker';
 ```
 
 
@@ -29,13 +29,13 @@ selector datepicker the same as primeng add only [isBudhistYear] = true or false
 @Component({
   selector: 'your-component',
   standalone: true,
-  imports: [DatePickerModule],
+  imports: [CalendarModule],
   template: `
-    <p-date-picker
+    <p-calendar
       [isBudhistYear]="true"
       dateFormat="dd/mm/yy"
       placeholder="Select a date"
-    ></<p-date-picker>
+    ></<p-calendar>
   `
 })
 export class YourComponent {}
