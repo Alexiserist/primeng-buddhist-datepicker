@@ -1,0 +1,29 @@
+<div style="display: flex; flex-direction: column; justify-content: center;align-items: center; width: 100vw; height: 100vh;">
+  <div style="width: 400px;  display: flex; flex-direction: column; gap: 4rem;">
+    <div style="display: flex; flex-direction: column;">
+      <label>Pick Date Budhist Year [isBudhistYear]="true"</label>
+      <p-date-picker [isBudhistYear]="true" [(ngModel)]="date"></p-date-picker>
+      <span style="font-size: small;">{{date}}</span>
+    </div>
+  
+      <div style="display: flex; flex-direction: column; ">
+      <label>Pick Date Range Budhist Year [isBudhistYear]="true"</label>
+      <p-date-picker [isBudhistYear]="true" [(ngModel)]="dateRange" selectionMode="range" (ngModelChange)="logData()"></p-date-picker>
+      <span style="font-size: small;">{{ "Date from : " + dateRange?.[0] }}</span>
+      <span style="font-size: small;">{{ "Date To : " + dateRange?.[1] }}</span>
+    </div>
+
+        <div style="display: flex; flex-direction: column;">
+      <label>Pick Date Budhist Year [isBudhistYear]="false"</label>
+      <p-date-picker [isBudhistYear]="false" [(ngModel)]="date"></p-date-picker>
+      <span style="font-size: small;">{{date}}</span>
+    </div>
+  
+      <div style="display: flex; flex-direction: column; ">
+      <label>Pick Date Range Budhist Year [isBudhistYear]="false"</label>
+      <p-date-picker [isBudhistYear]="false" [(ngModel)]="dateRange" selectionMode="range" (ngModelChange)="logData()"></p-date-picker>
+      <span style="font-size: small;">{{ "Date from : " + dateRange?.[0] }}</span>
+      <span style="font-size: small;">{{ "Date To : " + dateRange?.[1] }}</span>
+    </div>
+  </div>
+</div>
