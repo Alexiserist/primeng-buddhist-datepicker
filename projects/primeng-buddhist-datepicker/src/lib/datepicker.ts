@@ -3464,7 +3464,7 @@ export class DatePicker extends BaseComponent implements OnInit, AfterContentIni
                             output += formatName('M', date.getMonth(), this.getTranslation(TranslationKeys.MONTH_NAMES_SHORT), this.getTranslation(TranslationKeys.MONTH_NAMES));
                             break;
                         case 'y':
-                            output += lookAhead('y') ? date.getFullYear() + this.yearBudhist : (date.getFullYear() + this.yearBudhist % 100 < 10 ? '0' : '') + (date.getFullYear() + this.yearBudhist % 100);
+                            output += lookAhead('y') ? date.getFullYear() + this.yearBudhist : ((date.getFullYear() + this.yearBudhist) % 100 < 10 ? '0' : '') + ((date.getFullYear() + this.yearBudhist) % 100);
                             break;
                         case '@':
                             output += date.getTime();
