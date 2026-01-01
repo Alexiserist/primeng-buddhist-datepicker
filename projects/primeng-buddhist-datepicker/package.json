@@ -1,7 +1,7 @@
 {
   "name": "primeng-buddhist-year-datepicker",
-  "version": "19.0.1",
-  "description": "A PrimeNG v19 compatible Angular datepicker with Buddhist year (BE) calendar support for Thai localization and Buddhist users.",
+  "version": "20.0.0",
+  "description": "A PrimeNG v20 compatible Angular datepicker with Buddhist year (BE) calendar support for Thai localization and Buddhist users.",
   "author": "alexiserist",
   "license": "MIT",
   "keywords": [
@@ -29,9 +29,12 @@
     "url": "https://github.com/Alexiserist/primeng-buddhist-datepicker/issues"
   },
   "peerDependencies": {
-    "@angular/common": ">=19.0.0 <20.0.0",
-    "@angular/core": ">=19.0.0 <20.0.0",
-    "primeng": ">=19.0.0",
+    "@angular/common": "^20.3.15",
+    "@angular/compiler": "^20.3.15",
+    "@angular/core": "^20.3.15",
+    "@angular/forms": "^20.3.15",
+    "primeng": "^20.4.0",
+    "@primeuix/themes": "^2.0.2",
     "primeicons": "^7.0.0"
   },
   "dependencies": {
