@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng-buddhist-datepicker';
 
-import { DatePickerModule } from 'primeng-buddhist-year-datepicker';
 
 @Component({
   selector: 'app-root',
