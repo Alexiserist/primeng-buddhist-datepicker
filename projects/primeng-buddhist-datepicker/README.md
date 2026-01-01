@@ -9,10 +9,10 @@ This library extends the [PrimeNG Datepicker](https://primeng.org/datepicker) to
 
 ## 🔄 Version Compatibility
 
-| Angular Version        | Library Version                        | Install Command                                          |
-|------------------------|----------------------------------------|----------------------------------------------------------|
-| `^19.0.0` and above    | `primeng-buddhist-year-datepicker@19` | `npm i primeng-buddhist-year-datepicker@^19.0.0`         |
-| `^17.0.0` to `<19.0.0` | `primeng-buddhist-year-datepicker@17` | `npm i primeng-buddhist-year-datepicker@^17.0.0`         |
+| Angular Version        | Library Version                       | Install Command                                  |
+| ---------------------- | ------------------------------------- | ------------------------------------------------ |
+| `^19.0.0` and above    | `primeng-buddhist-year-datepicker@19` | `npm i primeng-buddhist-year-datepicker@^19.0.0` |
+| `^17.0.0` to `<19.0.0` | `primeng-buddhist-year-datepicker@17` | `npm i primeng-buddhist-year-datepicker@^17.0.0` |
 
 > ⚠️ Make sure to match the correct version of the library with your Angular version.
 
@@ -24,18 +24,22 @@ To see the component in action:
 
 ```bash
 npm install
+
+ng build primeng-buddhist-datepicker
+
 ng serve
 ```
 
-
 ## 🧪 Import Modules Into Component
+
 ```
 import { DatePickerModule } from 'primeng-buddhist-year-datepicker';
 ```
 
+## How to use
 
-## How to use 
 selector datepicker the same as primeng add only [isBudhistYear] = true or false
+
 ```
 @Component({
   selector: 'your-component',
