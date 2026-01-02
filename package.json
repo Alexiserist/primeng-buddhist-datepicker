@@ -21,7 +21,7 @@
     "@primeuix/themes": "^2.0.2",
     "primeicons": "^7.0.0",
     "primeng": "^21.0.2",
-    "primeng-buddhist-year-datepicker": "^21.0.0",
+    "primeng-buddhist-year-datepicker": "^21.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
