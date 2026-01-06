@@ -1868,6 +1868,12 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
             this.currentSecond = date.getSeconds();
         }
 
+        // When inputBudhistYear is true, convert the selected date to Buddhist year format
+        // because the stored value should match the input format (Buddhist year)
+        if (this.inputBudhistYear) {
+            date = new Date(date.getFullYear() + 543, date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
+        }
+
         if (this.isSingleSelection()) {
             this.updateModel(date);
         } else if (this.isMultipleSelection()) {
@@ -1949,9 +1955,11 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
 
     /**
      * Convert output value to Buddhist Era if outputBudhistYear is true
+     * Skip conversion if inputBudhistYear is true since value is already in Buddhist format
      */
     private convertOutputValue(value: any): any {
-        if (!this.outputBudhistYear || !value) return value;
+        // If inputBudhistYear is true, value is already Buddhist, no need to convert again
+        if (!this.outputBudhistYear || !value || this.inputBudhistYear) return value;
         if (Array.isArray(value)) {
             return value.map(d => this.convertToBuddhist(d));
         }
@@ -2078,7 +2086,6 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     isYearSelected(year: number) {
         if (this.isComparable()) {
             let value = this.isRangeSelection() ? this.value[0] : this.value;
-            // Add yearBudhist offset to compare with Buddhist year from yearPickerValues
             return !this.isMultipleSelection() ? (value.getFullYear() + this.yearBudhist) === year : false;
         }
 
@@ -3173,6 +3180,11 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
             }
         }
 
+        // Convert from Buddhist Era if inputBudhistYear is true
+        if (this.inputBudhistYear && date) {
+            date.setFullYear(date.getFullYear() - 543);
+        }
+
         return date;
     }
 
@@ -3198,10 +3210,15 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
             propValue = propValue.length === 2 ? propValue[1] : propValue[0];
         }
 
-        let val = this.defaultDate && this.isValidDate(this.defaultDate) && !this.value ? this.defaultDate : propValue && this.isValidDate(propValue) ? propValue : new Date();
+        // Determine if we have an actual value or using fallback
+        const hasValue = propValue && this.isValidDate(propValue);
+        const hasDefaultDate = this.defaultDate && this.isValidDate(this.defaultDate) && !this.value;
+        let val = hasDefaultDate ? this.defaultDate : hasValue ? propValue : new Date();
 
         this.currentMonth = val.getMonth();
-        this.currentYear = val.getFullYear();
+        // Only convert Buddhist year to Gregorian when we have an actual value with inputBudhistYear
+        // When falling back to new Date(), it's already Gregorian
+        this.currentYear = (this.inputBudhistYear && (hasValue || hasDefaultDate)) ? val.getFullYear() - 543 : val.getFullYear();
         this.createMonths(this.currentMonth, this.currentYear);
 
         if (this.showTime || this.timeOnly) {
@@ -3434,7 +3451,11 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
                             output += formatName('M', date.getMonth(), this.getTranslation(TranslationKeys.MONTH_NAMES_SHORT), this.getTranslation(TranslationKeys.MONTH_NAMES));
                             break;
                         case 'y':
-                            output += lookAhead('y') ? date.getFullYear() + this.yearBudhist : ((date.getFullYear() + this.yearBudhist) % 100 < 10 ? '0' : '') + ((date.getFullYear() + this.yearBudhist) % 100);
+                            // If inputBudhistYear is true, date year is Buddhist (2568), convert to Gregorian first (2025)
+                            // Then add yearBudhist offset based on isBudhistYear for display
+                            const baseYear = this.inputBudhistYear ? date.getFullYear() - 543 : date.getFullYear();
+                            const displayYear = baseYear + this.yearBudhist;
+                            output += lookAhead('y') ? displayYear : ((displayYear % 100 < 10 ? '0' : '') + (displayYear % 100));
                             break;
                         case '@':
                             output += date.getTime();
