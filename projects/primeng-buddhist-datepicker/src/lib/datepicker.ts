@@ -940,12 +940,26 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     @Input() get isBudhistYear(): boolean {
         return this._buddhist;
     }
-    set isBudhistYear(isBudhistYear: boolean){
+    set isBudhistYear(isBudhistYear: boolean) {
         this._buddhist = isBudhistYear;
     }
-    get yearBudhist():number {
+    get yearBudhist(): number {
         return this.isBudhistYear ? 543 : 0;
     }
+
+    /**
+     * When true, assumes input values are in Buddhist Era (พ.ศ.).
+     * The component will subtract 543 years for internal processing.
+     * @group Props
+     */
+    @Input({ transform: booleanAttribute }) inputBudhistYear: boolean = false;
+
+    /**
+     * When true, outputs dates in Buddhist Era (พ.ศ.).
+     * The component will add 543 years to output values.
+     * @group Props
+     */
+    @Input({ transform: booleanAttribute }) outputBudhistYear: boolean = false;
 
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
@@ -1120,7 +1134,7 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     _yearRange!: string;
 
     preventDocumentListener: Nullable<boolean>;
-    
+
     _buddhist: boolean = false;
 
     dayClass(date) {
@@ -1449,7 +1463,7 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
         let yearPickerValues: any[] = [];
         let base = <number>this.currentYear - (<number>this.currentYear % 10);
         for (let i = 0; i < 10; i++) {
-            yearPickerValues.push(base + i);
+            yearPickerValues.push(base + i + this.yearBudhist);
         }
 
         return yearPickerValues;
@@ -1729,10 +1743,12 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     }
 
     onYearSelect(event: Event, year: number) {
+        // Subtract yearBudhist offset because yearPickerValues displays Buddhist year
+        const gregorianYear = year - this.yearBudhist;
         if (this.view === 'year') {
-            this.onDateSelect(event, { year: year, month: 0, day: 1, selectable: true });
+            this.onDateSelect(event, { year: gregorianYear, month: 0, day: 1, selectable: true });
         } else {
-            this.currentYear = year;
+            this.currentYear = gregorianYear;
             this.setCurrentView('month');
             this.onYearChange.emit({ month: this.currentMonth + 1, year: this.currentYear });
         }
@@ -1880,9 +1896,12 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     updateModel(value: any) {
         this.value = value;
 
+        // Convert output based on outputBudhistYear setting
+        const outputValue = this.convertOutputValue(value);
+
         if (this.dataType == 'date') {
-            this.writeModelValue(this.value);
-            this.onModelChange(this.value);
+            this.writeModelValue(outputValue);
+            this.onModelChange(outputValue);
         } else if (this.dataType == 'string') {
             if (this.isSingleSelection()) {
                 this.onModelChange(this.formatDateTime(this.value));
@@ -1895,6 +1914,48 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
                 this.onModelChange(stringArrValue);
             }
         }
+    }
+
+    /**
+     * Convert date from Buddhist Era to Gregorian Era (subtract 543 years)
+     */
+    private convertFromBuddhist(date: Date | null): Date | null {
+        if (!date || !isDate(date)) return date;
+        const converted = new Date(date.getTime());
+        converted.setFullYear(date.getFullYear() - 543);
+        return converted;
+    }
+
+    /**
+     * Convert date from Gregorian Era to Buddhist Era (add 543 years)
+     */
+    private convertToBuddhist(date: Date | null): Date | null {
+        if (!date || !isDate(date)) return date;
+        const converted = new Date(date.getTime());
+        converted.setFullYear(date.getFullYear() + 543);
+        return converted;
+    }
+
+    /**
+     * Convert input value from Buddhist Era if inputBudhistYear is true
+     */
+    convertInputValue(value: any): any {
+        if (!this.inputBudhistYear || !value) return value;
+        if (Array.isArray(value)) {
+            return value.map(d => this.convertFromBuddhist(d));
+        }
+        return this.convertFromBuddhist(value);
+    }
+
+    /**
+     * Convert output value to Buddhist Era if outputBudhistYear is true
+     */
+    private convertOutputValue(value: any): any {
+        if (!this.outputBudhistYear || !value) return value;
+        if (Array.isArray(value)) {
+            return value.map(d => this.convertToBuddhist(d));
+        }
+        return this.convertToBuddhist(value);
     }
 
     getFirstDayOfMonthIndex(month: number, year: number) {
@@ -2017,8 +2078,8 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     isYearSelected(year: number) {
         if (this.isComparable()) {
             let value = this.isRangeSelection() ? this.value[0] : this.value;
-
-            return !this.isMultipleSelection() ? value.getFullYear() === year : false;
+            // Add yearBudhist offset to compare with Buddhist year from yearPickerValues
+            return !this.isMultipleSelection() ? (value.getFullYear() + this.yearBudhist) === year : false;
         }
 
         return false;
@@ -2182,7 +2243,8 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     }
 
     getYear(month: any) {
-        return this.currentView === 'month' ? this.currentYear : month.year;
+        const year = this.currentView === 'month' ? this.currentYear : month.year;
+        return year + this.yearBudhist;
     }
 
     switchViewButtonDisabled() {
@@ -2814,7 +2876,7 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
         }
 
         switch (
-            true // intentional fall through
+        true // intentional fall through
         ) {
             case isMinDate && minHoursExceeds12 && this.minDate!.getHours() === 12 && this.minDate!.getHours() > convertedHour:
                 returnTimeTriple[0] = 11;
@@ -3325,12 +3387,12 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
 
         let iFormat!: any;
         const lookAhead = (match: string) => {
-                const matches = iFormat + 1 < format.length && format.charAt(iFormat + 1) === match;
-                if (matches) {
-                    iFormat++;
-                }
-                return matches;
-            },
+            const matches = iFormat + 1 < format.length && format.charAt(iFormat + 1) === match;
+            if (matches) {
+                iFormat++;
+            }
+            return matches;
+        },
             formatNumber = (match: string, value: any, len: any) => {
                 let num = '' + value;
                 if (lookAhead(match)) {
@@ -3849,4 +3911,4 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
     imports: [DatePicker, SharedModule],
     exports: [DatePicker, SharedModule]
 })
-export class DatePickerModule {}
+export class DatePickerModule { }
