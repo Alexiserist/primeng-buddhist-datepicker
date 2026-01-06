@@ -17,6 +17,9 @@
     "paths": {
       "primeng-buddhist-datepicker": [
         "./dist/primeng-buddhist-datepicker"
+      ],
+      "primeng-buddhist-year-datepicker": [
+        "./dist/primeng-buddhist-datepicker"
       ]
     },
     "importHelpers": true,
