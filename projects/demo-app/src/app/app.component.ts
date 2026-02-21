@@ -12,11 +12,15 @@ import { DatePickerModule } from 'primeng-buddhist-year-datepicker';
 export class AppComponent {
   title = 'demo-app';
 
-  date:any;
-  dateRange: any;
-  
+  // Scenario 1: Display พ.ศ., Output ค.ศ.
+  date1: Date | null = null;
 
-  logData(){
-    console.log(this.dateRange)
-  }
+  // Scenario 2: Display พ.ศ., Output พ.ศ.
+  date2: Date | null = null;
+
+  // Scenario 3: Display ค.ศ., Output ค.ศ.
+  date3: Date | null = null;
+
+  // Scenario 4: Range with พ.ศ. output
+  dateRange: Date[] | null = null;
 }

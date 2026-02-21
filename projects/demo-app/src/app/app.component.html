@@ -1,29 +1,42 @@
-<div style="display: flex; flex-direction: column; justify-content: center;align-items: center; width: 100vw; height: 100vh;">
-  <div style="width: 400px;  display: flex; flex-direction: column; gap: 4rem;">
-    <div style="display: flex; flex-direction: column;">
-      <label>Pick Date Budhist Year [isBudhistYear]="true"</label>
-      <p-date-picker [isBudhistYear]="true" [(ngModel)]="date"></p-date-picker>
-      <span style="font-size: small;">{{date}}</span>
-    </div>
-  
-      <div style="display: flex; flex-direction: column; ">
-      <label>Pick Date Range Budhist Year [isBudhistYear]="true"</label>
-      <p-date-picker [isBudhistYear]="true" [(ngModel)]="dateRange" selectionMode="range" (ngModelChange)="logData()"></p-date-picker>
-      <span style="font-size: small;">{{ "Date from : " + dateRange?.[0] }}</span>
-      <span style="font-size: small;">{{ "Date To : " + dateRange?.[1] }}</span>
+<div style="display: flex; flex-direction: column; justify-content: center;align-items: center; width: 100vw; min-height: 100vh; padding: 2rem;">
+  <h1 style="margin-bottom: 2rem;">Buddhist Year DatePicker Demo</h1>
+  <div style="width: 500px; display: flex; flex-direction: column; gap: 2rem;">
+    
+    <!-- Scenario 1: Display พ.ศ., Output ค.ศ. (default behavior) -->
+    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+      <label style="font-weight: bold; margin-bottom: 0.5rem;">Scenario 1: Display พ.ศ., Output ค.ศ.</label>
+      <code style="font-size: 0.8rem; margin-bottom: 0.5rem;">[isBudhistYear]="true" [outputBudhistYear]="false"</code>
+      <p-date-picker [isBudhistYear]="true" [outputBudhistYear]="false" [(ngModel)]="date1"></p-date-picker>
+      <span style="font-size: small; margin-top: 0.5rem;">Output: {{date1}}</span>
+      <span style="font-size: small; color: green;">Year: {{date1?.getFullYear()}}</span>
     </div>
 
-        <div style="display: flex; flex-direction: column;">
-      <label>Pick Date Budhist Year [isBudhistYear]="false"</label>
-      <p-date-picker [isBudhistYear]="false" [(ngModel)]="date"></p-date-picker>
-      <span style="font-size: small;">{{date}}</span>
+    <!-- Scenario 2: Display พ.ศ., Output พ.ศ. -->
+    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+      <label style="font-weight: bold; margin-bottom: 0.5rem;">Scenario 2: Display พ.ศ., Output พ.ศ.</label>
+      <code style="font-size: 0.8rem; margin-bottom: 0.5rem;">[isBudhistYear]="true" [outputBudhistYear]="true"</code>
+      <p-date-picker [isBudhistYear]="true" [outputBudhistYear]="true" [(ngModel)]="date2"></p-date-picker>
+      <span style="font-size: small; margin-top: 0.5rem;">Output: {{date2}}</span>
+      <span style="font-size: small; color: green;">Year: {{date2?.getFullYear()}}</span>
     </div>
-  
-      <div style="display: flex; flex-direction: column; ">
-      <label>Pick Date Range Budhist Year [isBudhistYear]="false"</label>
-      <p-date-picker [isBudhistYear]="false" [(ngModel)]="dateRange" selectionMode="range" (ngModelChange)="logData()"></p-date-picker>
-      <span style="font-size: small;">{{ "Date from : " + dateRange?.[0] }}</span>
-      <span style="font-size: small;">{{ "Date To : " + dateRange?.[1] }}</span>
+
+    <!-- Scenario 3: Display ค.ศ., Output ค.ศ. -->
+    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+      <label style="font-weight: bold; margin-bottom: 0.5rem;">Scenario 3: Display ค.ศ., Output ค.ศ.</label>
+      <code style="font-size: 0.8rem; margin-bottom: 0.5rem;">[isBudhistYear]="false" [outputBudhistYear]="false"</code>
+      <p-date-picker [isBudhistYear]="false" [outputBudhistYear]="false" [(ngModel)]="date3"></p-date-picker>
+      <span style="font-size: small; margin-top: 0.5rem;">Output: {{date3}}</span>
+      <span style="font-size: small; color: green;">Year: {{date3?.getFullYear()}}</span>
     </div>
+
+    <!-- Scenario 4: Range Selection with พ.ศ. Output -->
+    <div style="display: flex; flex-direction: column; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+      <label style="font-weight: bold; margin-bottom: 0.5rem;">Scenario 4: Range Selection with พ.ศ. Output</label>
+      <code style="font-size: 0.8rem; margin-bottom: 0.5rem;">[isBudhistYear]="true" [outputBudhistYear]="true" selectionMode="range"</code>
+      <p-date-picker [isBudhistYear]="true" [outputBudhistYear]="true" [(ngModel)]="dateRange" selectionMode="range"></p-date-picker>
+      <span style="font-size: small; margin-top: 0.5rem;">From: {{dateRange?.[0]?.getFullYear() || 'N/A'}}</span>
+      <span style="font-size: small;">To: {{dateRange?.[1]?.getFullYear() || 'N/A'}}</span>
+    </div>
+
   </div>
 </div>
